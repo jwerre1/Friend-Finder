@@ -1,0 +1,23 @@
+{
+  "name": "friend-finder",
+  "version": "1.0.0",
+  "description": "Friend Finder",
+  "main": "server.js",
+  "scripts": {
+    "test": "test",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jwerre1/Friend-Finder.git"
+  },
+  "keywords": [
+    "friend"
+  ],
+  "author": "Jordan Werre",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jwerre1/Friend-Finder/issues"
+  },
+  "homepage": "https://github.com/jwerre1/Friend-Finder#readme"
+}
