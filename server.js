@@ -1,55 +1,31 @@
 // Dependencies
-var http = require("http");
-var fs = require("fs");
+// =============================================================
+var express = require("express");
+var path = require("path");
 
-var PORT = 8080;
+var router = require("express").Router();
 
-var server = http.createServer(handleRequest);
 
-function handleRequest(req, res) {
-  var path = req.url;
+// Sets up the Express App
+// =============================================================
+var app = express();
+var PORT = process.env.PORT || 3000;
 
-  switch (path) {
-  case "/survey":
-    return renderSurveyPage(req, res);
-  default:
-    return renderWelcomePage(req, res);
-  }
-}
+// Sets up the Express app to handle data parsing
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-function renderWelcomePage(req, res) {
-    fs.readFile(__dirname + "/app/public/home.html", function(err, data) {
-        if (err) {
-          res.writeHead(500, { "Content-Type": "text/html" });
-          res.end("<html><head><title>Oops</title></head><body><h1>Oops, there was an error</h1></html>");
-        }
-        else {
-          // We then respond to the client with the HTML page by specifically telling the browser that we are delivering
-          // an html file.
-          res.writeHead(200, { "Content-Type": "text/html" });
-          res.end(data);
-        }
-      });
-}
+app.use('/', require('./app/routing/htmlRoutes'));
+app.use('/survey', require('./app/routing/htmlRoutes'));
 
-function renderSurveyPage(req, res) {
-    fs.readFile(__dirname + "/app/public/survey.html", function(err, data) {
-        if (err) {
-          res.writeHead(500, { "Content-Type": "text/html" });
-          res.end("<html><head><title>Oops</title></head><body><h1>Oops, there was an error</h1></html>");
-        }
-        else {
-          // We then respond to the client with the HTML page by specifically telling the browser that we are delivering
-          // an html file.
-          res.writeHead(200, { "Content-Type": "text/html" });
-          res.end(data);
-        }
-      });
-}
+app.all("/api/friends", require('./app/routing/apiRoutes'));
+app.all("/api/clear", require('./app/routing/apiRoutes'));
 
 
 
-// Starts our server.
-server.listen(PORT, function() {
-  console.log("Server listening on: http://localhost:" + PORT);
-});
+
+
+
+  app.listen(PORT, function() {
+    console.log("App listening on PORT " + PORT);
+  });

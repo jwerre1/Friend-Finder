@@ -7,12 +7,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 
 <body>
     <div class="container">
         <h2 class="font-weight-bold">Survey Questions</h2>
         <hr>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <h4 class="font-weight-bold">About You</h4>
         <form action="http://localhost:8080/incoming">
@@ -160,20 +183,65 @@
                     <option value="5">5 (Strongly Agree)</option>
                 </select>
             </div>
-            <button type="submit" id="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
+            <button type="submit" id="add-btn" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#exampleModal">Submit</button>
 
         </form>
 
 
     </div>
+    <footer class="footer mt-4">
+            <div class="container">
+              <p>Control Panel</p>
+              <p><a href="#" id="clear">Clear Table</a> | <a href="/api/friends">API Friend Link</a>
+            </div>
+          </footer>
 
 
 
 
 
+    <script>
+        $("#add-btn").on("click", function (event) {
+            event.preventDefault();
+
+            var newPerson = {
+                name: $("#name").val(),
+                photo: $("#photo").val(),
+                scores: [
+                    $("#qOne").find(":selected").val(),
+                    $("#qTwo").find(":selected").val(),
+                    $("#qThree").find(":selected").val(),
+                    $("#qFour").find(":selected").val(),
+                    $("#qFive").find(":selected").val(),
+                    $("#qSix").find(":selected").val(),
+                    $("#qSeven").find(":selected").val(),
+                    $("#qEight").find(":selected").val(),
+                    $("#qNine").find(":selected").val(),
+                    $("#qTen").find(":selected").val(),
+                ]
+            };
+
+            console.log(newPerson);
+
+            // Question: What does this code do??
+            $.post("/api/friends", newPerson)
+                .then(function (data) {
+                    console.log(data);
+                    // alert("Info Added!!!");
+                });
+
+        });
+
+        function clearTable() {
+    alert("Clearing...");
+    // Clear the tables on the server and then empty the elements on the client
+    $.ajax({ url: "/api/clear", method: "POST" }).then(function() {
+    });
+  }
+  $("#clear").on("click", clearTable);
+    </script>
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         crossorigin="anonymous"></script>
