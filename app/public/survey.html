@@ -183,63 +183,84 @@
                     <option value="5">5 (Strongly Agree)</option>
                 </select>
             </div>
-            <button type="submit" id="add-btn" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#exampleModal">Submit</button>
+            <button type="submit" id="add-btn" class="btn btn-primary btn-lg btn-block" data-toggle="modal"
+                data-target="#exampleModal">Submit</button>
 
         </form>
 
 
     </div>
     <footer class="footer mt-4">
-            <div class="container">
-              <p>Control Panel</p>
-              <p><a href="#" id="clear">Clear Table</a> | <a href="/api/friends">API Friend Link</a>
-            </div>
-          </footer>
+        <div class="container">
+            <p>Control Panel</p>
+            <p><a href="#" id="clear">Clear Table</a> | <a href="/api/friends">API Friend Link</a>
+        </div>
+    </footer>
 
 
 
 
 
-    <script>
-        $("#add-btn").on("click", function (event) {
-            event.preventDefault();
+<script>
+    // var friends = require("../data/friends");
+    $("#add-btn").on("click", function (event) {
+        event.preventDefault();
 
-            var newPerson = {
-                name: $("#name").val(),
-                photo: $("#photo").val(),
-                scores: [
-                    $("#qOne").find(":selected").val(),
-                    $("#qTwo").find(":selected").val(),
-                    $("#qThree").find(":selected").val(),
-                    $("#qFour").find(":selected").val(),
-                    $("#qFive").find(":selected").val(),
-                    $("#qSix").find(":selected").val(),
-                    $("#qSeven").find(":selected").val(),
-                    $("#qEight").find(":selected").val(),
-                    $("#qNine").find(":selected").val(),
-                    $("#qTen").find(":selected").val(),
-                ]
-            };
+        var newPerson = {
+            name: $("#name").val(),
+            photo: $("#photo").val(),
+            scores: [
+                $("#qOne").find(":selected").val(),
+                $("#qTwo").find(":selected").val(),
+                $("#qThree").find(":selected").val(),
+                $("#qFour").find(":selected").val(),
+                $("#qFive").find(":selected").val(),
+                $("#qSix").find(":selected").val(),
+                $("#qSeven").find(":selected").val(),
+                $("#qEight").find(":selected").val(),
+                $("#qNine").find(":selected").val(),
+                $("#qTen").find(":selected").val(),
+            ]
+        };
+    //     function findClosest() {
+    //     for (i = 0; i < friends.length; i++) {
+    //         var closest;
+    //         for (j = 0; j < friends[i].scores.length; j++) {
+    //             var sum = 0;
+    //             var difference = newPerson.scores[j] - friends[i].scores[j];
+    //             var distance = Math.pow(difference, 2);
+    //             sum += distance;
+    //         }
+    //         var euclidDist = Math.pow(sum, .5);
 
-            console.log(newPerson);
+    //         if (euclidDist < closest) {
+    //             closest = euclidDist;
+    //         }
+    //         return euclidDist;
+    //     }
+    // }
 
-            // Question: What does this code do??
-            $.post("/api/friends", newPerson)
-                .then(function (data) {
-                    console.log(data);
-                    // alert("Info Added!!!");
-                });
+    // console.log(findClosest());
 
-        });
+        // console.log(newPerson);
 
-        function clearTable() {
-    alert("Clearing...");
-    // Clear the tables on the server and then empty the elements on the client
-    $.ajax({ url: "/api/clear", method: "POST" }).then(function() {
+        // Question: What does this code do??
+        $.post("/api/friends", newPerson)
+            .then(function (data) {
+                console.log(data);
+                // alert("Info Added!!!");
+            });
+
     });
-  }
-  $("#clear").on("click", clearTable);
-    </script>
+
+    function clearTable() {
+        alert("Clearing...");
+        // Clear the tables on the server and then empty the elements on the client
+        $.ajax({ url: "/api/clear", method: "POST" }).then(function () {
+        });
+    }
+    $("#clear").on("click", clearTable);
+</script>
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"

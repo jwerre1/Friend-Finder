@@ -27,7 +27,34 @@ router.post("/api/friends", function (req, res) {
     console.log(newPerson);
 
     friends.push(newPerson);
-    //gotta push it to friends.js
+
+    var check = friends.length - 1;
+    //Arbitrary large value.
+    var closest = 10000000000;
+    var closestFriend;
+        for (i = 0; i < check; i++) {
+            var sum = 0;
+            for (j = 0; j < friends[i].scores.length; j++) {
+
+                var difference = parseInt(friends[check].scores[j]) - parseInt(friends[i].scores[j]);
+                console.log("diff" + difference);
+                var distance = Math.pow(difference, 2);
+                console.log("dist" + distance)
+                sum += distance;
+                console.log("sum" + sum);
+            }
+            // var euclidDist = Math.pow(sum, .5);
+            // console.log(euclidDist);
+
+            if (sum < closest) {
+                closest = sum;
+                closestFriend = friends[i];
+            }
+        }
+
+
+   console.log(closest);
+   console.log(closestFriend);
 
     res.json(newPerson);
 
