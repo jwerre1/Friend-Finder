@@ -2,22 +2,22 @@
 // var path = require("path");
 
 var path = require("path");
-var router = require('express').Router();
-
+// var router = require('express').Router();
+module.exports = function(app) {
 // middleware that is specific to this router
-router.use(function timeLog (req, res, next) {
+app.use(function timeLog (req, res, next) {
     console.log('Time: ', Date.now())
     next()
   })
 
-router.get("/", function(req, res) {
+  app.get("/", function(req, res) {
     res.sendFile(path.join(__dirname, "../public/home.html"));
   });
 
 
   
   
-router.get("/survey", function(req, res) {
+  app.get("/survey", function(req, res) {
     res.sendFile(path.join(__dirname, "../public/survey.html"));
 });
 
@@ -25,4 +25,4 @@ router.get("/survey", function(req, res) {
 //     res.sendFile(path.join(__dirname, "../public/home.html"));
 //   });
 
-module.exports = router;  
+}

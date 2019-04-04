@@ -15,11 +15,17 @@ var PORT = process.env.PORT || 3000;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use('/', require('./app/routing/htmlRoutes'));
-app.use('/survey', require('./app/routing/htmlRoutes'));
+// app.use(express.static('public'));
 
-app.all("/api/friends", require('./app/routing/apiRoutes'));
-app.all("/api/clear", require('./app/routing/apiRoutes'));
+require("./app/routing/apiRoutes")(app);
+require("./app/routing/htmlRoutes")(app);
+
+
+// app.use('/', require('./app/routing/htmlRoutes'));
+// app.use('/survey', require('./app/routing/htmlRoutes'));
+
+// app.all("/api/friends", require('./app/routing/apiRoutes'));
+// app.all("/api/clear", require('./app/routing/apiRoutes'));
 
 
 

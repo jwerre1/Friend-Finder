@@ -4,22 +4,20 @@ var app = express();
 
 var path = require("path");
 var router = require('express').Router();
-var friends = require("../data/friends")
+var friends = require("../data/friends");
+var match = require("../public/javascript/match");
 
+
+
+module.exports = function(app) {
+// middleware that is specific to this router
 app.use(express.json());
 
-// middleware that is specific to this router
-router.use(function timeLog (req, res, next) {
-    console.log('Time: ', Date.now())
-    next()
-  })
-
-
-router.get("/api/friends", function (req, res) {
+app.get("/api/friends", function (req, res) {
     return res.json(friends);
 });
 
-router.post("/api/friends", function (req, res) {
+app.post("/api/friends", function (req, res) {
     // req.body hosts is equal to the JSON post sent from the user
     // This works because of our body parsing middleware
     var newPerson = req.body;
@@ -53,21 +51,24 @@ router.post("/api/friends", function (req, res) {
         }
 
 
+
+
    console.log(closest);
    console.log(closestFriend);
+   match = [];
+   match.push(closestFriend);
+   console.log(match);
 
-    res.json(newPerson);
+    res.json(closestFriend);
 
 
 
 });
 
-router.post("/api/clear", function (req, res) {
+app.post("/api/clear", function (req, res) {
     // req.body hosts is equal to the JSON post sent from the user
     // This works because of our body parsing middleware
 friends = [];
 
 });
-
-
-module.exports = router;  
+}
