@@ -65,10 +65,10 @@ app.post("/api/friends", function (req, res) {
 
 });
 
-app.post("/api/clear", function (req, res) {
-    // req.body hosts is equal to the JSON post sent from the user
-    // This works because of our body parsing middleware
-friends = [];
+// app.post("/api/clear", function (req, res) {
+//     // req.body hosts is equal to the JSON post sent from the user
+//     // This works because of our body parsing middleware
+// friends = [];
 
-});
+// });
 }
